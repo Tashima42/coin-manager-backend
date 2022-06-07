@@ -7,8 +7,7 @@ export class SqliteAuthorizationTokenRepository implements IAuthorizationTokenRe
   constructor(private sqliteDatabase: SqliteDatabase) {}
 
   async create(authorizationToken: AuthorizationToken): Promise<AuthorizationToken> {
-    const db = await this.sqliteDatabase.connect()
-    const created = await db.run(`INSERT INTO authorization_token 
+    const created = await this.sqliteDatabase.db.run(`INSERT INTO authorization_token 
         (user_id, token) 
         VALUES (?, ?)`,
       authorizationToken.getUserId(),
@@ -18,8 +17,7 @@ export class SqliteAuthorizationTokenRepository implements IAuthorizationTokenRe
     return authorizationToken
   }
   async getByToken(token: string): Promise<AuthorizationToken> {
-    const db = await this.sqliteDatabase.connect()
-    const authorizationTokenFound = await db.get(`SELECT authorization_token.id, authorization_token.token, authorization_token.valid, 
+    const authorizationTokenFound = await this.sqliteDatabase.db.get(`SELECT authorization_token.id, authorization_token.token, authorization_token.valid, 
       user.id AS userId, user.username, user.password, user.name
       FROM authorization_token
       LEFT JOIN user ON authorization_token.user_id = user.id
@@ -42,8 +40,7 @@ export class SqliteAuthorizationTokenRepository implements IAuthorizationTokenRe
     return authorizationToken
   }
   async disable(code: string): Promise<Boolean> {
-    const db = await this.sqliteDatabase.connect()
-    const updated = await db.run(
+    const updated = await this.sqliteDatabase.db.run(
       'UPDATE authorization_token SET active = ? WHERE code = ?',
       0,
       code
