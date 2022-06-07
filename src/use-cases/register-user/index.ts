@@ -1,5 +1,5 @@
-import {AuthenticateUserUseCase} from "./authenticate-user-use-case";
-import {AuthenticateUserController} from "./authenticate-user-controller";
+import {AuthenticateUserUseCase} from "./register-user-use-case";
+import {AuthenticateUserController} from "./register-user-controller";
 import {CryptoHelper} from "../../helpers/implementations/CryptoHelper";
 import {SqliteAuthorizationTokenRepository} from "../../repositories/implementations/Sqlite/SqliteAuthorizationTokenRepository";
 import {SqliteUserRepository} from "../../repositories/implementations/Sqlite/SqliteUserRepository";

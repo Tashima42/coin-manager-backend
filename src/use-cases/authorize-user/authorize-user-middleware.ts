@@ -10,7 +10,7 @@ export class AuthorizeUserMiddleware {
       if (!request.headers.authorization.includes("Bearer")) throw {code: "UC-AEU-002", message: "Authorization must be of type Bearer"}
       const token = request.headers.authorization.split("Bearer ")[1]
       const user = await this.authorizeUserUseCase.execute(token)
-      request.body.authorizedUser = user
+      response.locals.authorizedUser = user
       next()
     } catch (error: any) {
       console.error(error)
