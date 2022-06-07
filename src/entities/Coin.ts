@@ -1,12 +1,16 @@
 export class Coin {
   private name: string;
   private price: string;
-  private description: string;
+  private image: string;
+  private year: number;
+  private id: number;
 
-  constructor(name: string, price: string, description: string) {
+  constructor(name: string, price: string, image: string, year: number, id?: number) {
     this.name = name;
     this.price = price;
-    this.description = description;
+    this.image = image;
+    this.year = year;
+    this.id = id;
   }
 
   getName(): string {
@@ -16,6 +20,12 @@ export class Coin {
     return this.price;
   }
   getDescription(): string {
-    return this.description;
+    return this.image;
+  }
+  getYear(): number {
+ 	return this.year;
+  }
+  getId(): number {
+	  return this.id;
   }
 }
