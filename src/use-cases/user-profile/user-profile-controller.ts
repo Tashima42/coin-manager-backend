@@ -5,11 +5,11 @@ import {UserProfileUseCase} from "./user-profile-use-case";
 export class UserProfileController {
   constructor(private userProfileUseCase: UserProfileUseCase) {}
 
-  async handle(request: Request, response: Response): Promise<unknown> {
+  async handle(_: Request, response: Response): Promise<unknown> {
     try {
       const user = response.locals.authorizedUser
       const userProfile = await this.userProfileUseCase.execute(user)
-      const responseDTO: IUserProfileResponseDTO = {userProfile}
+      const responseDTO: IUserProfileResponseDTO = userProfile
 
       return response.status(200).json(responseDTO)
     } catch (error: any) {

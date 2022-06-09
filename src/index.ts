@@ -8,8 +8,10 @@ import {router} from "./routes"
 
 const app = express()
 
+const port = process.env.PORT || 3890
+
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://coin-manager-hokdxpnd4-tashima42.vercel.app'],
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200
 }
@@ -23,7 +25,7 @@ app.use(router)
 app.options("/user/authenticate", cors())
 
 sqliteDatabase.connect().then(() => {
-  app.listen(3890, () => console.info("app listening on port 3890"))
+  app.listen(port, () => console.info("app listening on port " + port))
 })
 
 function log(req: Request, res: Response, next: NextFunction): unknown {

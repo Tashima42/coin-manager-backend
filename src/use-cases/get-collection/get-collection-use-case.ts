@@ -8,6 +8,6 @@ export class GetCollectionUseCase {
 
   async execute(id: number): Promise<IGetCollectionResponseDTO> {
     const collection = await this.collectionRepository.findById(id)
-    return collection
+    return {collection}
   }
 }
