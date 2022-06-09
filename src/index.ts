@@ -11,7 +11,7 @@ const app = express()
 const port = process.env.PORT || 3890
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://coin-manager-hokdxpnd4-tashima42.vercel.app'],
+  origin: ['http://localhost:3000', 'https://coin-manager-hokdxpnd4-tashima42.vercel.app', 'https://coin-manager-web.vercel.app'],
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200
 }
