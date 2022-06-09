@@ -87,6 +87,7 @@ export class SqliteDatabase {
       id 'INTEGER' PRIMARY KEY,
       name 'TEXT',
       description 'TEXT',
+      asking_price 'TEXT',
       listed_coin 'INTEGER' NOT NULL,
       traded_coin 'INTEGER',
       FOREIGN KEY (listed_coin) REFERENCES coin (id),
@@ -123,14 +124,14 @@ export class SqliteDatabase {
   }
   async populateTableCoin() {
     await this.db.run(`INSERT INTO coin (
-        name, price, image, year
-      ) VALUES (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?)`,
-      'Um Centavo', '0.01', '1 Centavo',
-      'Cinco Centavos', '0.50', '5 Centavos',
-      'Dez Centavos', '0.10', '10 Centavos',
-      'Vinte e Cinco Centavos', '0.25', '25 Centavos',
-      'Cinquenta Centavos', '0.50', '50 Centavos',
-      'Um Real', '1.00', 'Moeda Brasileira',
+        name, image, price, year
+      ) VALUES (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?)`,
+      'Um Centavo', 'image', '0.01', 2000,
+      'Cinco Centavos', 'image', '0.05', 2000,
+      'Dez Centavos', 'image', '0.10', 2000,
+      'Vinte e Cinco Centavos', 'image', '0.25', 2000,
+      'Cinquenta Centavos', 'image', '0.50', 2000,
+      'Um Real', 'image', '1.00', 2000,
     )
   }
   async populateTableCollection() {
@@ -158,12 +159,12 @@ export class SqliteDatabase {
   }
   async populateTableListing() {
     await this.db.run(`INSERT INTO listing(
-        name, description, listed_coin, traded_coin
-      ) VALUES (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?)`,
-      "Um centavo", "um centavo", 1, null,
-      "Cinco Centavos por Dez centavos", "Sim, isso mesmo", 2, 3,
-      "Vinte e Cinco Centavos", "vinte e cinco centavos", 4, null,
-      "Um real por Cinquenta Centavos", "um real", 5, 6,
+        name, description, asking_price, listed_coin, traded_coin
+      ) VALUES (?, ?, ?, ?, ?), (?, ?, ?, ?, ?), (?, ?, ?, ?, ?), (?, ?, ?, ?, ?)`,
+      "Um centavo", "um centavo", '100', 1, null,
+      "Cinco Centavos por Dez centavos", "Sim, isso mesmo", null, 2, 3,
+      "Vinte e Cinco Centavos", "vinte e cinco centavos", '100', 4, null,
+      "Um real por Cinquenta Centavos", "um real", null, 5, 6,
     )
   }
   async populateTableTransaction() {
