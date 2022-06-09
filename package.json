@@ -10,6 +10,7 @@
     "build": "tsc --build",
     "db:migrate": "ts-node --transpile-only scripts/database.ts --migrate",
     "db:populate": "ts-node --transpile-only scripts/database.ts --populate",
+    "db:dropall": "ts-node --transpile-only scripts/database.ts --drop-all",
     "db:migrate:populate": "ts-node --transpile-only scripts/database.ts --migrate --populate"
   },
   "author": "tashima42",

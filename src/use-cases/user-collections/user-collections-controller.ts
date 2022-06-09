@@ -5,11 +5,10 @@ import {UserCollectionsUseCase} from "./user-collections-use-case";
 export class UserCollectionsController {
   constructor(private userCollectionsUseCase: UserCollectionsUseCase) {}
 
-  async handle(request: Request, response: Response): Promise<unknown> {
+  async handle(_: Request, response: Response): Promise<unknown> {
     try {
       const user = response.locals.authorizedUser
-      const collections = await this.userCollectionsUseCase.execute(user)
-      const responseDTO: IUserCollectionsResponseDTO = { collections}
+      const responseDTO = await this.userCollectionsUseCase.execute(user)
 
       return response.status(200).json(responseDTO)
     } catch (error: any) {

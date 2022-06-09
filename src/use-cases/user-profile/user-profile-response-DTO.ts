@@ -1,3 +1,3 @@
 export interface IUserProfileResponseDTO {
-  userProfile: {username: string, id: number};
+  userProfile: {name: string, username: string, id: number};
 }

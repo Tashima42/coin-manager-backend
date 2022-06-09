@@ -8,11 +8,19 @@ import {router} from "./routes"
 
 const app = express()
 
-app.use(cors())
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(log)
 app.use(router)
+
+app.options("/user/authenticate", cors())
 
 sqliteDatabase.connect().then(() => {
   app.listen(3890, () => console.info("app listening on port 3890"))
