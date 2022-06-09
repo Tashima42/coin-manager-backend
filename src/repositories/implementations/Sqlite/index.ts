@@ -136,9 +136,9 @@ export class SqliteDatabase {
   }
   async populateTableCollection() {
     await this.db.run(`INSERT INTO collection (
-        name
-      ) VALUES (?) `,
-      'Moedas Brasileiras')
+        name, description
+      ) VALUES (?, ?) `,
+      'Moedas Brasileiras', 'Moedas em cirulacao no Brasil')
   }
   async populateTableUserCollection() {
     await this.db.run(`INSERT INTO user_collection (

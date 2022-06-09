@@ -7,6 +7,8 @@ import {userProfileController} from "./use-cases/user-profile";
 import {getCollectionController} from "./use-cases/get-collection";
 import {getListingsController} from "./use-cases/get-listings";
 import {getCoinsController} from "./use-cases/get-coins";
+import {getCollectionCoinsController} from "./use-cases/get-collection-coins"
+import {addCoinToCollectionController} from "./use-cases/add-coin-to-collection";
 
 const router = Router()
 
@@ -22,5 +24,7 @@ router.get('/user', (req, res) => userProfileController.handle(req, res))
 router.get('/collection/:id', (req, res) => getCollectionController.handle(req, res))
 router.get('/listing/all', (req, res) => getListingsController.handle(req, res))
 router.get('/coin/all', (req, res) => getCoinsController.handle(req, res))
+router.get('/collection/:id/coin/all', (req, res) => getCollectionCoinsController.handle(req, res))
+router.post('/collection/:collection_id/coin/:coin_id', (req, res) => addCoinToCollectionController.handle(req, res))
 
 export {router}

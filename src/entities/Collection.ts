@@ -1,5 +1,3 @@
-import {Coin} from "./Coin";
-
 export class Collection {
   private name: string;
   private description: string;
@@ -18,6 +16,6 @@ export class Collection {
     return this.description;
   }
   getId(): number {
-	  return this.id;
+    return this.id;
   }
 }
