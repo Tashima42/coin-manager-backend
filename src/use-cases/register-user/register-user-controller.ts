@@ -1,20 +1,21 @@
 import {Request, Response} from "express";
-import {IAuthenticateUserRequestDTO} from "./register-user-request-DTO";
-import {IAuthenticateUserResponseDTO} from "./register-user-response-DTO";
-import {AuthenticateUserUseCase} from "./register-user-use-case";
+import {IRegisterUserRequestDTO} from "./register-user-request-DTO";
+import {IRegisterUserResponseDTO} from "./register-user-response-DTO";
+import {RegisterUserUseCase} from "./register-user-use-case";
 
-export class AuthenticateUserController {
-  constructor(private authenticateUserUseCase: AuthenticateUserUseCase) {}
+export class RegisterUserController {
+  constructor(private registerUserUseCase: RegisterUserUseCase) {}
 
   async handle(request: Request, response: Response): Promise<unknown> {
-    const {username, password}: IAuthenticateUserRequestDTO = request.body
+    const {name, username, password}: IRegisterUserRequestDTO = request.body
 
     try {
-      const token = await this.authenticateUserUseCase.execute({
+      const token = await this.registerUserUseCase.execute({
+        name,
         username,
         password,
       })
-      const authenticationToken: IAuthenticateUserResponseDTO = {
+      const authenticationToken: IRegisterUserResponseDTO = {
         type: "Bearer",
         token
       }

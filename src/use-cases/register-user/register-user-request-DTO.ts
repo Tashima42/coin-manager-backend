@@ -1,4 +1,5 @@
-export interface IAuthenticateUserRequestDTO {
+export interface IRegisterUserRequestDTO {
+  name: string,
   username: string,
   password: string,
 }

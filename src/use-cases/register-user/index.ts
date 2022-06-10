@@ -1,5 +1,5 @@
-import {AuthenticateUserUseCase} from "./register-user-use-case";
-import {AuthenticateUserController} from "./register-user-controller";
+import {RegisterUserUseCase} from "./register-user-use-case";
+import {RegisterUserController} from "./register-user-controller";
 import {CryptoHelper} from "../../helpers/implementations/CryptoHelper";
 import {SqliteAuthorizationTokenRepository} from "../../repositories/implementations/Sqlite/SqliteAuthorizationTokenRepository";
 import {SqliteUserRepository} from "../../repositories/implementations/Sqlite/SqliteUserRepository";
@@ -12,9 +12,9 @@ const authorizationCodeRepository = new SqliteAuthorizationTokenRepository(sqlit
 const userRepository = new SqliteUserRepository(sqliteDatabase)
 
 // Instantiate Use Case
-const authenticateUserUseCase = new AuthenticateUserUseCase(userRepository, authorizationCodeRepository, cryptoHelper)
+const registerUserUseCase = new RegisterUserUseCase(userRepository, authorizationCodeRepository, cryptoHelper)
 
 // Instantiate Controller
-const authenticateUserController = new AuthenticateUserController(authenticateUserUseCase)
+const registerUserController = new RegisterUserController(registerUserUseCase)
 
-export {authenticateUserController}
+export {registerUserController}

@@ -1,30 +1,32 @@
-import {IAuthenticateUserRequestDTO} from "./register-user-request-DTO";
+import {IRegisterUserRequestDTO} from "./register-user-request-DTO";
 import {IAuthorizationTokenRepository} from "../../repositories/IAuthorizationTokenRepository";
 import {IUserRepository} from "../../repositories/IUserRepository";
 import {AuthorizationToken} from "../../entities/AuthorizationToken";
 import {ICryptoHelper} from "../../helpers/ICryptoHelper";
 import {User} from "../../entities/User";
 
-export class AuthenticateUserUseCase {
+export class RegisterUserUseCase {
   constructor(
     private userRepository: IUserRepository,
     private authorizationTokenRepository: IAuthorizationTokenRepository,
     private cryptoHelper: ICryptoHelper
   ) {}
 
-  async execute(data: IAuthenticateUserRequestDTO): Promise<string> {
-    const {username, password: plainPassword} = data
+  async execute(data: IRegisterUserRequestDTO): Promise<string> {
+    const {name, username, password: plainPassword} = data
 
-    // Get user information
-    const userFound = await this.userRepository.findByUsername(username)
-    if (!userFound) throw {code: "UC-AU-001", message: "User not found"}
-    // Extract hashed password from user
-    const hashedPassword = userFound.getPassword()
-    // Compare plain password with hashed password
-    const isPasswordCorrect = await this.cryptoHelper.compareBcrypt(plainPassword, hashedPassword)
-    if (!isPasswordCorrect) throw {code: "UC-AU-002", message: "Incorrect password"}
-    // Generate authorization code for the user
-    const authorizationCode = await this.generateAuthorizationToken(userFound)
+    try {
+      await this.userRepository.findByUsername(username)
+    } catch (error) {
+      if (error.code !== "RS-IS-SE-UR-001") throw error
+    }
+    const hashedPassword = await this.cryptoHelper.hashBcrypt(plainPassword)
+
+    const user = new User(username, name, hashedPassword)
+
+    const createdUser = await this.userRepository.create(user)
+
+    const authorizationCode = await this.generateAuthorizationToken(createdUser)
 
     return authorizationCode
   }

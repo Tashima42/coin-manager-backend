@@ -1,4 +1,4 @@
-export interface IAuthenticateUserResponseDTO {
+export interface IRegisterUserResponseDTO {
   type: string,
   token: string,
 }

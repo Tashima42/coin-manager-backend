@@ -90,6 +90,8 @@ export class SqliteDatabase {
       asking_price 'TEXT',
       listed_coin 'INTEGER' NOT NULL,
       traded_coin 'INTEGER',
+      enabled 'BOOLEAN' DEFAULT TRUE NOT NULL,
+      trade 'BOOLEAN' NOT NULL,
       FOREIGN KEY (listed_coin) REFERENCES coin (id),
       FOREIGN KEY (traded_coin) REFERENCES coin (id))`)
   }
@@ -97,7 +99,7 @@ export class SqliteDatabase {
     await this.db.exec(`CREATE TABLE IF NOT EXISTS 'transaction'(
       id 'INTEGER' PRIMARY KEY,
       date 'TEXT' NOT NULL,
-      payment_form 'TEXT',
+      payment_method 'TEXT',
       listing_id 'INTEGER' NOT NULL,
       FOREIGN KEY (listing_id) REFERENCES listing (id))`)
   }
@@ -106,7 +108,7 @@ export class SqliteDatabase {
       id 'INTEGER' PRIMARY KEY,
       user_id 'INTEGER' NOT NULL,
       token 'TEXT' NOT NULL UNIQUE,
-      valid 'BOOLEAN' DEFAULT "TRUE" NOT NULL,
+      valid 'BOOLEAN' DEFAULT TRUE NOT NULL,
       FOREIGN KEY (user_id) REFERENCES user (id))`)
   }
 
@@ -159,17 +161,17 @@ export class SqliteDatabase {
   }
   async populateTableListing() {
     await this.db.run(`INSERT INTO listing(
-        name, description, asking_price, listed_coin, traded_coin
-      ) VALUES (?, ?, ?, ?, ?), (?, ?, ?, ?, ?), (?, ?, ?, ?, ?), (?, ?, ?, ?, ?)`,
-      "Um centavo", "um centavo", '100', 1, null,
-      "Cinco Centavos por Dez centavos", "Sim, isso mesmo", null, 2, 3,
-      "Vinte e Cinco Centavos", "vinte e cinco centavos", '100', 4, null,
-      "Um real por Cinquenta Centavos", "um real", null, 5, 6,
+        name, description, asking_price, trade, listed_coin, traded_coin
+      ) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)`,
+      "Um centavo", "um centavo", '100', false, 1, null,
+      "Cinco Centavos por Dez centavos", "Sim, isso mesmo", null, true, 2, 3,
+      "Vinte e Cinco Centavos", "vinte e cinco centavos", '100', false, 4, null,
+      "Um real por Cinquenta Centavos", "um real", null, true, 5, 6
     )
   }
   async populateTableTransaction() {
     await this.db.run(`INSERT INTO 'transaction'(
-        date, payment_form, listing_id
+        date, payment_method, listing_id
       ) VALUES (?, ?, ?), (?, ?, ?), (?, ?, ?), (?, ?, ?)`,
       "2022-05-29T21:00:50.525Z", "credit_card", 1,
       "2022-05-29T21:00:50.525Z", null, 2,
