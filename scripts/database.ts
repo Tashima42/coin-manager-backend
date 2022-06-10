@@ -12,6 +12,7 @@ async function run() {
     if (arg === '--migrate') await sqliteDatabase.migrate()
     if (arg === '--populate') await sqliteDatabase.populate()
     if (arg === '--drop-all') await sqliteDatabase.dropAll()
+    if (arg === '--populate-coins') await sqliteDatabase.populateTableCoinGeneratedData()
   }
 }
 
