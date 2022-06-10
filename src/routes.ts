@@ -13,6 +13,8 @@ import {makeTransactionController} from "./use-cases/make-transaction";
 import {getTransactionByListingIdController} from "./use-cases/get-transaction-by-listing-id";
 import {registerUserController} from "./use-cases/register-user";
 import {getTransactionsController} from "./use-cases/get-transactions";
+import {createCollectionController} from "./use-cases/create-collection";
+import {createListingController} from "./use-cases/create-listing";
 
 const router = Router()
 
@@ -34,5 +36,7 @@ router.post('/collection/:collection_id/coin/:coin_id', (req, res) => addCoinToC
 router.post('/transaction/create', (req, res) => makeTransactionController.handle(req, res))
 router.get('/transaction/listing/:listing_id', (req, res) => getTransactionByListingIdController.handle(req, res))
 router.get('/transaction/all', (req, res) => getTransactionsController.handle(req, res))
+router.post('/collection/create', (req, res) => createCollectionController.handle(req, res))
+router.post('/listing/create', (req, res) => createListingController.handle(req, res))
 
 export {router}

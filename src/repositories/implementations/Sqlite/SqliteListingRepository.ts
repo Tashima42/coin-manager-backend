@@ -23,7 +23,6 @@ export class SqliteListingRepository implements IListingRepository {
       if (listing.traded_name) {
         tradedCoin = new Coin(listing.traded_name, listing.traded_price, listing.traded_image, listing.traded_year, listing.traded_id)
       }
-      console.log(listing.enabled)
       return new Listing(
         listing.asking_price,
         listing.name,
@@ -42,5 +41,13 @@ export class SqliteListingRepository implements IListingRepository {
   }
   async setTradedCoin(id: number, tradedCoinId: number): Promise<void> {
     await this.sqliteDatabase.db.run(`UPDATE listing SET traded_coin = ? WHERE id = ?`, tradedCoinId, id)
+  }
+  async create(listing: Listing): Promise<void> {
+    console.log({listing})
+    const created = await this.sqliteDatabase.db.run(`INSERT INTO listing 
+                                     (asking_price, name, description, enabled, trade, listed_coin, traded_coin) 
+                                     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      listing.getAskingPrice(), listing.getName(), listing.getDescription(), listing.getEnabled(), listing.getTrade(), listing.getListedCoin().getId(), null)
+    console.log({created})
   }
 }

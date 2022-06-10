@@ -18,4 +18,7 @@ export class Collection {
   getId(): number {
     return this.id;
   }
+  setId(id: number): void {
+    this.id = id;
+  }
 }

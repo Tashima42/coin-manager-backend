@@ -28,4 +28,11 @@ export class SqliteCollectionRepository implements ICollectionRepository {
       collectionFound.id
     )
   }
+  async create(collection: Collection, userId: number): Promise<Collection> {
+    const created = await this.sqliteDatabase.db.run(`INSERT INTO collection (name, description) VALUES (?, ?);`,
+      collection.getName(), collection.getDescription())
+    collection.setId(created.lastID)
+    await this.sqliteDatabase.db.run(`INSERT INTO user_collection (user_id, collection_id) VALUES (?, ?);`, userId, collection.getId())
+    return collection
+  }
 }

@@ -8,7 +8,6 @@ export class MakeTransactionController {
   async handle(request: Request, response: Response): Promise<unknown> {
     try {
       const {body} = request
-      console.log(body)
       const makeTransactionRequestDTO: IMakeTransactionRequestDTO = {
         listing_id: parseInt(body.listing_id),
         payment_method: body?.payment_method,

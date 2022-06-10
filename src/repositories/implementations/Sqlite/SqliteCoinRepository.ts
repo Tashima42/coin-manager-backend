@@ -28,4 +28,9 @@ export class SqliteCoinRepository implements ICoinRepository {
   async addToCollection(collection_id: number, coin_id: number): Promise<void> {
     await this.sqliteDatabase.db.run(`INSERT INTO collection_coin (collection_id, coin_id) VALUES (?, ?);`, collection_id, coin_id)
   }
+  async findById(id: number): Promise<Coin> {
+    const coinFound = await this.sqliteDatabase.db.get(`SELECT id, name, image, price, year 
+                                                  FROM coin WHERE id = ?;`, id)
+    return new Coin(coinFound.name, coinFound.price, coinFound.image, coinFound.year, coinFound.id)
+  }
 }
